@@ -21,7 +21,6 @@
 		A547AE251D1D167E001CC260 /* CurrencyWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A547AE201D1D167E001CC260 /* CurrencyWriter.swift */; };
 		A547AE271D1D167E001CC260 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A547AE221D1D167E001CC260 /* MainView.swift */; };
 		A547AE281D1D167E001CC260 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A547AE231D1D167E001CC260 /* MainViewController.swift */; };
-		A547AE2A1D1D168E001CC260 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A547AE291D1D168E001CC260 /* Currency.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +53,6 @@
 		A547AE201D1D167E001CC260 /* CurrencyWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyWriter.swift; sourceTree = "<group>"; };
 		A547AE221D1D167E001CC260 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		A547AE231D1D167E001CC260 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		A547AE291D1D168E001CC260 /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		B8F3C02349E953DB64743921 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -183,7 +181,6 @@
 		A547AE1C1D1D167E001CC260 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A547AE291D1D168E001CC260 /* Currency.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -355,7 +352,6 @@
 			files = (
 				A53E06131D1D4A2600740B6F /* ServerProtocol.swift in Sources */,
 				A547AE0F1D1CFA76001CC260 /* AppDelegate.swift in Sources */,
-				A547AE2A1D1D168E001CC260 /* Currency.swift in Sources */,
 				A53E06111D1D4A1D00740B6F /* ServerRequest.swift in Sources */,
 				A547AE271D1D167E001CC260 /* MainView.swift in Sources */,
 				A53E06161D1D55C900740B6F /* DependencyModule.swift in Sources */,

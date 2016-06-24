@@ -7,5 +7,6 @@
 //
 
 protocol ServerProtocol {
-  func getCurrencies(callback: (currencies: [Currency]?, error: String?)->())
+  func getCurrencies(callback: (currencies: [String]?, error: String?)->())
+  func getProporcial(fromCurrency fromCurrency: String, toCurrency: String, callback: (proporcial: Double?, error: String?)->())
 }

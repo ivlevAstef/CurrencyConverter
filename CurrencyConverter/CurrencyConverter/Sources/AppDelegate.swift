@@ -8,6 +8,7 @@
 
 import UIKit
 import DITranquillity
+import SIALoggerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    SIALogConfig.maxLogLevel = SIALogLevel.Trace
+    
     try! DIMain.autoRegistrate()
     
     let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)

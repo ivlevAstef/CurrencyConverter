@@ -11,7 +11,7 @@ import SIALoggerSwift
 
 class Server: ServerProtocol {
   
-  func getCurrencies(callback: (currencies: [Currency]?, error: String?)->()) {
+  func getCurrencies(callback: (currencies: [String]?, error: String?)->()) {
     let request = ServerRequest(method: "latest")
     
     request.GET { (dataOpt, error) in
@@ -20,7 +20,7 @@ class Server: ServerProtocol {
         return
       }
       
-      guard let currencies = self.parse(data) else {
+      guard let currencies = self.parseCurrencies(data) else {
         callback(currencies: nil, error: "Can't parse server response")
         return
       }
@@ -29,29 +29,72 @@ class Server: ServerProtocol {
     }
   }
   
-  private func parse(data: NSData) -> [Currency]? {
-    SIALog.Info("Start parse")
+  func getProporcial(fromCurrency fromCurrency: String, toCurrency: String, callback: (proporcial: Double?, error: String?)->()) {
+    guard fromCurrency != toCurrency else {
+      callback(proporcial: 1.0, error: nil)
+      return
+    }
+    
+    let request = ServerRequest(method: "latest?base=\(fromCurrency)&symbols=\(toCurrency)")
+    
+    request.GET { (dataOpt, error) in
+      guard let data = dataOpt else {
+        callback(proporcial: nil, error: error)
+        return
+      }
+      
+      guard let proporical = self.parseProporcial(data) else {
+        callback(proporcial: nil, error: "Can't parse server response")
+        return
+      }
+      
+      callback(proporcial: proporical, error: nil)
+    }
+  }
+  
+  private func parseCurrencies(data: NSData) -> [String]? {
+    SIALog.Info("Start parse currencies")
     
     do {
       let objects = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
       
-      var result: [Currency] = []
+      var result: [String] = []
       
       if let baseCurrencyName = objects["base"] as? String {
-        result.append(Currency(name: baseCurrencyName, value: 1.0))
+        result.append(baseCurrencyName)
       }
       
       if let currencies = objects["rates"] as? Dictionary<String, Double> {
-        for (name, value) in currencies {
-          result.append(Currency(name: name, value: value))
+        for (name, _) in currencies {
+          result.append(name)
         }
       }
     
-      SIALog.Info("Parse success: \(result)")
+      SIALog.Info("Parse currencies success: \(result)")
       return result
     } catch {
-      SIALog.Error("Parse failed")
+      SIALog.Error("Parse currencies failed")
       return nil
     }
+  }
+  
+  private func parseProporcial(data: NSData) -> Double? {
+    SIALog.Info("Start parse proporcial")
+    
+    do {
+      let objects = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
+      
+      if let currencies = objects["rates"] as? Dictionary<String, Double> {
+        for (_, value) in currencies {
+          SIALog.Info("Parse proporcial success")
+          return value
+        }
+      }
+      
+    } catch {
+    }
+    
+    SIALog.Error("Parse proporcial failed")
+    return nil
   }
 }

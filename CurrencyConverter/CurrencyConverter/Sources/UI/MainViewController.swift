@@ -13,7 +13,8 @@ import SIALoggerSwift
 class MainViewController: UIViewController, CurrencyWriterDelegate {
   private let server : ServerProtocol
   private var mainView: MainView! { return self.view as! MainView }
-  private var currencies: [Currency]? = nil
+  private var currencies: [String]? = nil
+  private var proporcialData: (from: String, to: String, value: Double) = ("","",1)
   
   required init?(coder aDecoder: NSCoder) {
     server = *!DIMain.container!
@@ -33,23 +34,24 @@ class MainViewController: UIViewController, CurrencyWriterDelegate {
   private func loadCurrencies() {
     mainView.activityIndicator(show: true)
     server.getCurrencies { (currenciesOpt, error) in
-      self.mainView.activityIndicator(show: false)
-      
-      guard let currencies = currenciesOpt else {
-        self.showAlert(error ?? "No Internet") {
-          //abort()
-          self.loadCurrencies()
+      dispatch_async(dispatch_get_main_queue(), {
+        self.mainView.activityIndicator(show: false)
+        
+        guard let currencies = currenciesOpt else {
+          self.showAlert(error ?? "No Internet") {
+            //abort()
+            self.loadCurrencies()
+          }
+          return
         }
-        return
-      }
-      
-      let sortedCurrencies = currencies.sort { $0.name < $1.name }
-      
-      self.currencies = sortedCurrencies
-      self.mainView.myCurrencyWriter.setCurrencies(sortedCurrencies.map{ $0.name })
-      self.mainView.wantCurrencyWriter.setCurrencies(sortedCurrencies.map{ $0.name })
-      
-      self.updateInterface(self.mainView.myCurrencyWriter, use: self.mainView.wantCurrencyWriter)
+        
+        self.currencies = currencies.sort { $0 < $1 }
+        
+        self.mainView.myCurrencyWriter.setCurrencies(self.currencies!)
+        self.mainView.wantCurrencyWriter.setCurrencies(self.currencies!)
+        
+        self.updateInterface(self.mainView.myCurrencyWriter, use: self.mainView.wantCurrencyWriter)
+      })
     }
   }
   
@@ -69,9 +71,15 @@ class MainViewController: UIViewController, CurrencyWriterDelegate {
   }
   
   private func updateInterface(writer: CurrencyWriter, use writerForGet: CurrencyWriter) {
-    updateCurrencyWriter(writer, use: writerForGet)
-    updateCurrencyProporcial(writer, use: writerForGet)
-    
+    updateCurrencyProporcial(writer, use: writerForGet) { (success, error) in
+        guard success else {
+          self.showAlert(error ?? "Can't get information from serevr", callback: {})
+          return
+        }
+        
+        self.updateCurrencyWriter(writer, use: writerForGet)
+        self.updateCurrencyProporcial(writer, use: writerForGet)
+    }
   }
   
   private func updateCurrencyWriter(writer: CurrencyWriter, use writerForGet: CurrencyWriter) {
@@ -81,9 +89,7 @@ class MainViewController: UIViewController, CurrencyWriterDelegate {
       return
     }
     
-    let toAmount = fromAmount * getCurrencyProporcial(writer, use: writerForGet)
-    
-    guard let toAmountStr = amountFormatter.stringFromNumber(toAmount) else {
+    guard let toAmountStr = amountFormatter.stringFromNumber(fromAmount * proporcialData.value) else {
       return
     }
     
@@ -93,22 +99,43 @@ class MainViewController: UIViewController, CurrencyWriterDelegate {
   private func updateCurrencyProporcial(writer: CurrencyWriter, use writerForGet: CurrencyWriter) {
     SIALog.Assert(nil != currencies)
     
-    let proporcial = getCurrencyProporcial(writer, use: writerForGet)
-    guard let proporcialStr = amountFormatter.stringFromNumber(proporcial) else {
+    guard let proporcialStr = amountFormatter.stringFromNumber(proporcialData.value) else {
       return
     }
     
-    let fromName = currencies![writerForGet.getSelectedCurrencyIndex()].name
-    let toName = currencies![writer.getSelectedCurrencyIndex()].name
+    let fromName = currencies![writerForGet.getSelectedCurrencyIndex()]
+    let toName = currencies![writer.getSelectedCurrencyIndex()]
     
     mainView.setCurrencyProporcial(currencyFrom: fromName, currencyTo: toName, proporcial: proporcialStr)
-    
   }
   
-  private func getCurrencyProporcial(writer: CurrencyWriter, use writerForGet: CurrencyWriter) -> Double {
-    let fromValue = currencies![writerForGet.getSelectedCurrencyIndex()].value
-    let toValue = currencies![writer.getSelectedCurrencyIndex()].value
-    return toValue / fromValue
+  private var proporcialSemaphore = dispatch_semaphore_create(1)
+  private func updateCurrencyProporcial(writer: CurrencyWriter, use writerForGet: CurrencyWriter, callback: (success: Bool, error: String?) -> ()) {
+    let fromName = currencies![writerForGet.getSelectedCurrencyIndex()]
+    let toName = currencies![writer.getSelectedCurrencyIndex()]
+    
+    if proporcialData.from == fromName && proporcialData.to == toName {
+      callback(success: true, error: nil)
+      return
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+      dispatch_semaphore_wait(self.proporcialSemaphore, DISPATCH_TIME_FOREVER)
+      
+      self.server.getProporcial(fromCurrency: fromName, toCurrency: toName) { proporcialOpt, error in
+        dispatch_async(dispatch_get_main_queue()) {
+          dispatch_semaphore_signal(self.proporcialSemaphore)
+          
+          guard let proporcial = proporcialOpt else {
+            callback(success: false, error: error)
+            return
+          }
+          
+          self.proporcialData = (fromName, toName, proporcial)
+          callback(success: true, error: nil)
+        }
+      }
+    }
   }
   
   private func showAlert(message: String, callback: () -> ()) {

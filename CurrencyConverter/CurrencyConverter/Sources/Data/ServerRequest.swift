@@ -24,7 +24,7 @@ class ServerRequest {
     
     let session = NSURLSession.sharedSession()
     let task = session.dataTaskWithRequest(request) {dataOpt, _, errorOpt in
-      SIALog.Info("GET \(self.requestURL) Request Ended With data \(dataOpt)")
+      SIALog.Info("GET \(self.requestURL) Request Ended")
       if let error = errorOpt {
         callback(data: nil, error: error.localizedDescription)
         return
@@ -35,6 +35,7 @@ class ServerRequest {
         return
       }
       
+      SIALog.Trace("Response data: \(String(data: data, encoding: NSUTF8StringEncoding))")
       callback(data: data, error: nil)
     }
     
