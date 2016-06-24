@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DITranquillity
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    // Override point for customization after application launch.
+    try! DIMain.autoRegistrate()
+    
+    let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    let rootViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainViewController")
+    
+    self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    self.window!.rootViewController = rootViewController
+    self.window!.makeKeyAndVisible()
+    
     return true
   }
 
