@@ -29,10 +29,30 @@ class CurrencyWriter: UIView,
   }
   
   func setCurrencies(currencies: [Currency]) {
+    SIALog.Assert(!currencies.isEmpty)
+    
     self.currencies = currencies
+    selectCurrency(currencies[0])
     picker.reloadAllComponents()
     
     SIALog.Info("Updated currencies")
+  }
+  
+  func selectCurrency(currency: Currency) {
+    for i in 0..<currencies.count {
+      if currency === currencies[i] {
+        selectedRow = i
+        self.currency.text = currency.name
+        return
+      }
+    }
+    
+    SIALog.Error("Can't found \(currency) in currencies")
+  }
+  
+  func endActions() {
+    hidePicker(true)
+    amount.resignFirstResponder()
   }
   
   //UIPickerViewDataSource
@@ -45,14 +65,26 @@ class CurrencyWriter: UIView,
   }
   
   //UIPickerViewDelegate
-  func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+  func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
     SIALog.Assert(0 <= row && row <= currencies.count)
     
-    return currencies[row].name
+    if let label = view as? UILabel {
+      label.text = currencies[row].name
+      return label
+    }
+    
+    let label = UILabel(frame: currency.bounds)
+    label.font = currency.font
+    label.textAlignment = currency.textAlignment
+    
+    label.text = currencies[row].name
+    
+    return label
   }
   
   func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    SIALog.Assert(0 <= row && row <= currencies.count)
+    SIALog.Assert(0 <= row && row < currencies.count)
+    selectCurrency(currencies[row])
     
     SIALog.Info("Selected currency:\(currencies[row])")
     if let delegate = self.delegate {
@@ -76,11 +108,6 @@ class CurrencyWriter: UIView,
     return true
   }
   
-  func textFieldShouldReturn(textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
-    return true
-  }
-  
   //Awake
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -97,20 +124,24 @@ class CurrencyWriter: UIView,
   
   private var currencies: [Currency] = []
   private var pickerHidden = true
+  private var selectedRow = 0
   
   private func localization() {
     amount.placeholder = "amount"
-    currency.text = "currency"
+    currency.text = ""
   }
   
   private func setupUI() {
     hidePicker(false)
     
-    self.picker.dataSource = self
-    self.picker.delegate = self
-    self.amount.delegate = self
-    self.view.bounds.origin.y -= self.picker.bounds.size.height/2
-    self.view.bounds.size.height = self.picker.bounds.size.height
+    picker.dataSource = self
+    picker.delegate = self
+    amount.delegate = self
+    
+    picker.showsSelectionIndicator = false
+    
+    view.bounds.origin.y = picker.frame.origin.y
+    view.bounds.size.height = picker.frame.size.height
     
     setCurrencies([Currency(name: "USB", value: 1.0),
       Currency(name: "RUB", value: 1.0),
@@ -146,6 +177,8 @@ class CurrencyWriter: UIView,
   private func hidePicker(animated: Bool) {
     changePicker(animated, alpha: 0)
     pickerHidden = true
+    //rollback
+    picker.selectRow(selectedRow, inComponent: 0, animated: false)
   }
   
   private func changePicker(animated: Bool, alpha: CGFloat) {
