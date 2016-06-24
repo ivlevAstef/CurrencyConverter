@@ -10,7 +10,7 @@ import UIKit
 import SIALoggerSwift
 
 protocol CurrencyWriterDelegate {
-  func currencyWriter(currencyWriter: CurrencyWriter, amountChanges amount:Double)
+  func currencyWriter(currencyWriter: CurrencyWriter, amountChanges amount:String)
   func currencyWriter(currencyWriter: CurrencyWriter, currencyChanges currency:Currency)
 }
 
@@ -49,6 +49,19 @@ class CurrencyWriter: UIView,
     
     SIALog.Error("Can't found \(currency) in currencies")
   }
+  
+  func getSelectedCurrency() -> Currency {
+    return currencies[selectedRow]
+  }
+  
+  func setCurrentAmount(amount: String) {
+    self.amount.text = amount
+  }
+  
+  func getCurrentAmount() -> String {
+    return self.amount.text ?? ""
+  }
+  
   
   func endActions() {
     hidePicker(true)
@@ -96,16 +109,22 @@ class CurrencyWriter: UIView,
   func textFieldShouldEndEditing(textField: UITextField) -> Bool {
     SIALog.Info("Updated amount")
     
-    if let delegate = self.delegate, text = textField.text {
-      if let amount = Double(text) {
-        delegate.currencyWriter(self, amountChanges: amount)
-      } else {
-        textField.text = "0"
-        delegate.currencyWriter(self, amountChanges: 0)
-      }
-    }
-    
+    updateAmount()
     return true
+  }
+  
+  func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    let text = self.amount.text! as NSString
+    self.amount.text = text.stringByReplacingCharactersInRange(range, withString: string)
+    
+    updateAmount()
+    return false
+  }
+  
+  private func updateAmount() {
+    if let delegate = self.delegate, text = self.amount.text {
+      delegate.currencyWriter(self, amountChanges: text)
+    }
   }
   
   //Awake
