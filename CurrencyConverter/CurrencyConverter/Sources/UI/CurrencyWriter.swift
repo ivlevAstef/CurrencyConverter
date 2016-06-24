@@ -14,7 +14,7 @@ protocol CurrencyWriterDelegate {
   func currencyWriter(currencyWriter: CurrencyWriter, currencyChanges currencyIndex:Int)
 }
 
-@IBDesignable
+//@IBDesignable
 class CurrencyWriter: UIView,
   UIPickerViewDelegate, UIPickerViewDataSource,
   UITextFieldDelegate {

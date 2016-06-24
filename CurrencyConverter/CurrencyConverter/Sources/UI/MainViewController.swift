@@ -44,6 +44,8 @@ class MainViewController: UIViewController, CurrencyWriterDelegate {
       self.currencies = sortedCurrencies
       self.mainView.myCurrencyWriter.setCurrencies(sortedCurrencies.map{ $0.name })
       self.mainView.wantCurrencyWriter.setCurrencies(sortedCurrencies.map{ $0.name })
+      
+      self.updateInterface(self.mainView.myCurrencyWriter, use: self.mainView.wantCurrencyWriter)
     }
   }
   
@@ -55,29 +57,54 @@ class MainViewController: UIViewController, CurrencyWriterDelegate {
       return self.mainView.myCurrencyWriter
     }
     
-    updateCurrencyWriter(getOtherCurrencyWriter(writer), use: writer)
+    updateInterface(getOtherCurrencyWriter(writer), use: writer)
   }
   
   func currencyWriter(_: CurrencyWriter, currencyChanges _:Int) {
-    updateCurrencyWriter(mainView.wantCurrencyWriter, use: mainView.myCurrencyWriter)
+    updateInterface(mainView.wantCurrencyWriter, use: mainView.myCurrencyWriter)
+  }
+  
+  private func updateInterface(writer: CurrencyWriter, use writerForGet: CurrencyWriter) {
+    updateCurrencyWriter(writer, use: writerForGet)
+    updateCurrencyProporcial(writer, use: writerForGet)
+    
   }
   
   private func updateCurrencyWriter(writer: CurrencyWriter, use writerForGet: CurrencyWriter) {
     SIALog.Assert(nil != currencies)
     
-    let fromValue = currencies![writerForGet.getSelectedCurrencyIndex()].value
-    let toValue = currencies![writer.getSelectedCurrencyIndex()].value
-    
     guard let fromAmount = amountFormatter.numberFromString(writerForGet.getCurrentAmount())?.doubleValue else {
       return
     }
     
-    let toAmount = fromAmount * toValue / fromValue
+    let toAmount = fromAmount * getCurrencyProporcial(writer, use: writerForGet)
+    
     guard let toAmountStr = amountFormatter.stringFromNumber(toAmount) else {
       return
     }
     
     writer.setCurrentAmount(toAmountStr)
+  }
+  
+  private func updateCurrencyProporcial(writer: CurrencyWriter, use writerForGet: CurrencyWriter) {
+    SIALog.Assert(nil != currencies)
+    
+    let proporcial = getCurrencyProporcial(writer, use: writerForGet)
+    guard let proporcialStr = amountFormatter.stringFromNumber(proporcial) else {
+      return
+    }
+    
+    let fromName = currencies![writerForGet.getSelectedCurrencyIndex()].name
+    let toName = currencies![writer.getSelectedCurrencyIndex()].name
+    
+    mainView.setCurrencyProporcial(currencyFrom: fromName, currencyTo: toName, proporcial: proporcialStr)
+    
+  }
+  
+  private func getCurrencyProporcial(writer: CurrencyWriter, use writerForGet: CurrencyWriter) -> Double {
+    let fromValue = currencies![writerForGet.getSelectedCurrencyIndex()].value
+    let toValue = currencies![writer.getSelectedCurrencyIndex()].value
+    return toValue / fromValue
   }
   
   private let amountFormatter: NSNumberFormatter = {

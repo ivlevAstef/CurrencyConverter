@@ -19,8 +19,14 @@ class MainView: UIView {
   @IBOutlet var myCurrencyWriter: CurrencyWriter!
   @IBOutlet var wantCurrencyWriter: CurrencyWriter!
   
+  @IBOutlet var currencyProportionLbl: UILabel!
+  
   func activityIndicator(show show: Bool) {
     activityView.hidden = !show
+  }
+  
+  func setCurrencyProporcial(currencyFrom currencyFrom: String, currencyTo: String, proporcial: String) {
+    currencyProportionLbl.text = "1 \(currencyFrom) equals \(proporcial) \(currencyTo)"
   }
   
   override func awakeFromNib() {
