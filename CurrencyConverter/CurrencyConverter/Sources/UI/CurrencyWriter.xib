@@ -19,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="amount" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xbm-qn-pS6">
-                    <rect key="frame" x="0.0" y="0.0" width="220" height="30"/>
+                    <rect key="frame" x="0.0" y="0.0" width="212" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                     <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
                 </textField>
@@ -57,7 +57,7 @@
                 <constraint firstItem="MwQ-XE-rXj" firstAttribute="centerY" secondItem="RIP-JR-A8O" secondAttribute="centerY" id="GUe-yw-zap"/>
                 <constraint firstItem="MwQ-XE-rXj" firstAttribute="trailing" secondItem="RIP-JR-A8O" secondAttribute="trailing" id="Mx7-kQ-KYT"/>
                 <constraint firstItem="Xbm-qn-pS6" firstAttribute="top" secondItem="VBL-jJ-b1a" secondAttribute="top" id="NnX-tX-c8F"/>
-                <constraint firstItem="RIP-JR-A8O" firstAttribute="leading" secondItem="Xbm-qn-pS6" secondAttribute="trailing" id="ai5-iQ-x0i"/>
+                <constraint firstItem="RIP-JR-A8O" firstAttribute="leading" secondItem="Xbm-qn-pS6" secondAttribute="trailing" constant="8" id="ai5-iQ-x0i"/>
                 <constraint firstItem="Xbm-qn-pS6" firstAttribute="leading" secondItem="VBL-jJ-b1a" secondAttribute="leading" id="eOa-Qs-rUu"/>
                 <constraint firstAttribute="trailing" secondItem="RIP-JR-A8O" secondAttribute="trailing" id="tq1-4a-9L6"/>
                 <constraint firstItem="RIP-JR-A8O" firstAttribute="baseline" secondItem="Xbm-qn-pS6" secondAttribute="baseline" id="w4T-ka-Usb"/>

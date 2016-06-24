@@ -11,7 +11,7 @@ import SIALoggerSwift
 
 protocol CurrencyWriterDelegate {
   func currencyWriter(currencyWriter: CurrencyWriter, amountChanges amount:String)
-  func currencyWriter(currencyWriter: CurrencyWriter, currencyChanges currency:Currency)
+  func currencyWriter(currencyWriter: CurrencyWriter, currencyChanges currencyIndex:Int)
 }
 
 @IBDesignable
@@ -28,30 +28,25 @@ class CurrencyWriter: UIView,
     self.addSubview(self.view)
   }
   
-  func setCurrencies(currencies: [Currency]) {
+  func setCurrencies(currencies: [String]) {
     SIALog.Assert(!currencies.isEmpty)
     
     self.currencies = currencies
-    selectCurrency(currencies[0])
+    
+    selectCurrency(0)
     picker.reloadAllComponents()
     
     SIALog.Info("Updated currencies")
   }
   
-  func selectCurrency(currency: Currency) {
-    for i in 0..<currencies.count {
-      if currency === currencies[i] {
-        selectedRow = i
-        self.currency.text = currency.name
-        return
-      }
-    }
-    
-    SIALog.Error("Can't found \(currency) in currencies")
+  func selectCurrency(index: Int) {
+    SIALog.Assert(0 <= index && index < currencies.count)
+    selectedRow = index
+    self.currency.text = currencies[index]
   }
   
-  func getSelectedCurrency() -> Currency {
-    return currencies[selectedRow]
+  func getSelectedCurrencyIndex() -> Int {
+    return selectedRow
   }
   
   func setCurrentAmount(amount: String) {
@@ -61,7 +56,6 @@ class CurrencyWriter: UIView,
   func getCurrentAmount() -> String {
     return self.amount.text ?? ""
   }
-  
   
   func endActions() {
     hidePicker(true)
@@ -79,10 +73,10 @@ class CurrencyWriter: UIView,
   
   //UIPickerViewDelegate
   func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
-    SIALog.Assert(0 <= row && row <= currencies.count)
+    SIALog.Assert(0 <= row && row < currencies.count)
     
     if let label = view as? UILabel {
-      label.text = currencies[row].name
+      label.text = currencies[row]
       return label
     }
     
@@ -90,18 +84,17 @@ class CurrencyWriter: UIView,
     label.font = currency.font
     label.textAlignment = currency.textAlignment
     
-    label.text = currencies[row].name
+    label.text = currencies[row]
     
     return label
   }
   
   func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    SIALog.Assert(0 <= row && row < currencies.count)
-    selectCurrency(currencies[row])
+    selectCurrency(row)
     
     SIALog.Info("Selected currency:\(currencies[row])")
     if let delegate = self.delegate {
-      delegate.currencyWriter(self, currencyChanges: currencies[row])
+      delegate.currencyWriter(self, currencyChanges: row)
     }
   }
   
@@ -141,7 +134,7 @@ class CurrencyWriter: UIView,
   @IBOutlet private var currency: UILabel!
   @IBOutlet private var picker: UIPickerView!
   
-  private var currencies: [Currency] = []
+  private var currencies: [String] = []
   private var pickerHidden = true
   private var selectedRow = 0
   

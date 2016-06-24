@@ -8,10 +8,12 @@
 
 import UIKit
 import DITranquillity
+import SIALoggerSwift
 
 class MainViewController: UIViewController, CurrencyWriterDelegate {
   private let server : ServerProtocol
   private var mainView: MainView! { return self.view as! MainView }
+  private var currencies: [Currency]? = nil
   
   required init?(coder aDecoder: NSCoder) {
     server = *!DIMain.container!
@@ -37,12 +39,15 @@ class MainViewController: UIViewController, CurrencyWriterDelegate {
         return
       }
       
-      self.mainView.myCurrencyWriter.setCurrencies(currencies)
-      self.mainView.wantCurrencyWriter.setCurrencies(currencies)
+      let sortedCurrencies = currencies.sort { $0.name < $1.name }
+      
+      self.currencies = sortedCurrencies
+      self.mainView.myCurrencyWriter.setCurrencies(sortedCurrencies.map{ $0.name })
+      self.mainView.wantCurrencyWriter.setCurrencies(sortedCurrencies.map{ $0.name })
     }
   }
   
-  func currencyWriter(writer: CurrencyWriter, amountChanges amount: String) {
+  func currencyWriter(writer: CurrencyWriter, amountChanges _: String) {
     let getOtherCurrencyWriter = {(currencyWriter: CurrencyWriter) -> CurrencyWriter in
       if self.mainView.myCurrencyWriter === currencyWriter {
         return self.mainView.wantCurrencyWriter
@@ -53,13 +58,15 @@ class MainViewController: UIViewController, CurrencyWriterDelegate {
     updateCurrencyWriter(getOtherCurrencyWriter(writer), use: writer)
   }
   
-  func currencyWriter(writer: CurrencyWriter, currencyChanges currency:Currency) {
+  func currencyWriter(_: CurrencyWriter, currencyChanges _:Int) {
     updateCurrencyWriter(mainView.wantCurrencyWriter, use: mainView.myCurrencyWriter)
   }
   
   private func updateCurrencyWriter(writer: CurrencyWriter, use writerForGet: CurrencyWriter) {
-    let fromValue = writerForGet.getSelectedCurrency().value
-    let toValue = writer.getSelectedCurrency().value
+    SIALog.Assert(nil != currencies)
+    
+    let fromValue = currencies![writerForGet.getSelectedCurrencyIndex()].value
+    let toValue = currencies![writer.getSelectedCurrencyIndex()].value
     
     guard let fromAmount = amountFormatter.numberFromString(writerForGet.getCurrentAmount())?.doubleValue else {
       return
