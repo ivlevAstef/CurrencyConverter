@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--MainViewController-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="MainViewController" title="MainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MainViewController" customModule="CurrencyConverter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="MainView" customModule="CurrencyConverter" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency Converter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Hp-qQ-r4l">
+                                <rect key="frame" x="16" y="36" width="288" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency I have:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="72f-04-pOM">
+                                <rect key="frame" x="16" y="120" width="288" height="29"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qBo-Kg-Iyd" customClass="CurrencyWriter" customModule="CurrencyConverter" customModuleProvider="target">
+                                <rect key="frame" x="16" y="157" width="288" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="ZHF-KZ-i3C"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 AUC equals 1,222 EUC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEW-Zj-UUF">
+                                <rect key="frame" x="16" y="219" width="288" height="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency I want:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pJT-Yd-AfL">
+                                <rect key="frame" x="16" y="275" width="288" height="29"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pxo-Sl-rmm" customClass="CurrencyWriter" customModule="CurrencyConverter" customModuleProvider="target">
+                                <rect key="frame" x="16" y="312" width="288" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="AfJ-r3-D21"/>
+                                </constraints>
+                            </view>
+                            <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gxd-G3-lPd">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="tQL-A3-dPe">
+                                        <rect key="frame" x="142" y="265" width="37" height="37"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="tQL-A3-dPe" firstAttribute="centerY" secondItem="gxd-G3-lPd" secondAttribute="centerY" id="5hn-cX-GVg"/>
+                                    <constraint firstItem="tQL-A3-dPe" firstAttribute="centerX" secondItem="gxd-G3-lPd" secondAttribute="centerX" id="BqW-N6-ZQt"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="pJT-Yd-AfL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="4uj-GC-diQ"/>
+                            <constraint firstItem="72f-04-pOM" firstAttribute="top" secondItem="8Hp-qQ-r4l" secondAttribute="bottom" constant="48" id="52e-Dp-c48"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NEW-Zj-UUF" secondAttribute="trailing" id="6Am-WD-s7f"/>
+                            <constraint firstItem="72f-04-pOM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="6ww-3Q-uJy"/>
+                            <constraint firstItem="gxd-G3-lPd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8cL-WF-Xzb"/>
+                            <constraint firstItem="pJT-Yd-AfL" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="BbY-8B-nj4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qBo-Kg-Iyd" secondAttribute="trailing" id="Ceo-QL-sbI"/>
+                            <constraint firstItem="qBo-Kg-Iyd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="EcG-3N-nVM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pxo-Sl-rmm" secondAttribute="trailing" id="F6a-dr-Dw1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8Hp-qQ-r4l" secondAttribute="trailing" id="Ggm-dk-clx"/>
+                            <constraint firstAttribute="trailing" secondItem="gxd-G3-lPd" secondAttribute="trailing" id="Jm8-xP-AmO"/>
+                            <constraint firstItem="pxo-Sl-rmm" firstAttribute="top" secondItem="pJT-Yd-AfL" secondAttribute="bottom" constant="8" id="OKE-zG-l6Y"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gxd-G3-lPd" secondAttribute="bottom" id="Wu7-G0-aie"/>
+                            <constraint firstItem="NEW-Zj-UUF" firstAttribute="top" secondItem="qBo-Kg-Iyd" secondAttribute="bottom" constant="32" id="X1Y-7I-bac"/>
+                            <constraint firstItem="pJT-Yd-AfL" firstAttribute="top" secondItem="NEW-Zj-UUF" secondAttribute="bottom" constant="32" id="XKL-hw-T6I"/>
+                            <constraint firstItem="8Hp-qQ-r4l" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="hL2-2G-d1Q"/>
+                            <constraint firstItem="gxd-G3-lPd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ifL-M3-p8r"/>
+                            <constraint firstItem="qBo-Kg-Iyd" firstAttribute="top" secondItem="72f-04-pOM" secondAttribute="bottom" constant="8" id="kYi-LK-SbV"/>
+                            <constraint firstItem="72f-04-pOM" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="ruR-kC-alj"/>
+                            <constraint firstItem="NEW-Zj-UUF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="sE1-hI-SAo"/>
+                            <constraint firstItem="pxo-Sl-rmm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="uhI-Cj-1rj"/>
+                            <constraint firstItem="8Hp-qQ-r4l" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="wop-eO-R7K"/>
+                        </constraints>
+                        <connections>
+                            <outlet property="activityView" destination="gxd-G3-lPd" id="cr3-UZ-vDn"/>
+                            <outlet property="currencyProportionLbl" destination="NEW-Zj-UUF" id="0Da-Ir-TwC"/>
+                            <outlet property="myCurrencyLbl" destination="72f-04-pOM" id="I5D-kR-KXB"/>
+                            <outlet property="myCurrencyWriter" destination="qBo-Kg-Iyd" id="5Aw-oG-nbZ"/>
+                            <outlet property="titleLbl" destination="8Hp-qQ-r4l" id="HUy-rw-fdX"/>
+                            <outlet property="wantCurrencyLbl" destination="pJT-Yd-AfL" id="jFk-DQ-M5j"/>
+                            <outlet property="wantCurrencyWriter" destination="pxo-Sl-rmm" id="h2I-6Z-gsy"/>
+                        </connections>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="572" y="464"/>
+        </scene>
+    </scenes>
+</document>

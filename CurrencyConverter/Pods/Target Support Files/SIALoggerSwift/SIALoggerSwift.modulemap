@@ -1,0 +1,6 @@
+framework module SIALoggerSwift {
+  umbrella header "SIALoggerSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}
