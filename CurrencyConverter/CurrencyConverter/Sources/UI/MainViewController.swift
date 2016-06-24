@@ -36,6 +36,10 @@ class MainViewController: UIViewController, CurrencyWriterDelegate {
       self.mainView.activityIndicator(show: false)
       
       guard let currencies = currenciesOpt else {
+        self.showAlert(error ?? "No Internet") {
+          //abort()
+          self.loadCurrencies()
+        }
         return
       }
       
@@ -105,6 +109,15 @@ class MainViewController: UIViewController, CurrencyWriterDelegate {
     let fromValue = currencies![writerForGet.getSelectedCurrencyIndex()].value
     let toValue = currencies![writer.getSelectedCurrencyIndex()].value
     return toValue / fromValue
+  }
+  
+  private func showAlert(message: String, callback: () -> ()) {
+     let alertController = UIAlertController(title: "Error", message:message, preferredStyle: UIAlertControllerStyle.Alert)
+    alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { _ in
+      callback()
+    }))
+    
+    self.presentViewController(alertController, animated: true, completion: nil)
   }
   
   private let amountFormatter: NSNumberFormatter = {

@@ -53,5 +53,6 @@ class MainView: UIView {
     titleLbl.text = "Currency Converter"
     myCurrencyLbl.text = "Currency I have:"
     wantCurrencyLbl.text = "Currency I want:"
+    currencyProportionLbl.text = ""
   }
 }
