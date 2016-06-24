@@ -9,14 +9,19 @@
 import UIKit
 
 class MainView: UIView {
+  @IBOutlet var activityView: UIView!
   
   @IBOutlet private var titleLbl: UILabel!
   
   @IBOutlet private var myCurrencyLbl: UILabel!
-  @IBOutlet private var myCurrencyWriter: CurrencyWriter!
-  
   @IBOutlet private var wantCurrencyLbl: UILabel!
-  @IBOutlet private var wantCurrencyWriter: CurrencyWriter!
+  
+  @IBOutlet var myCurrencyWriter: CurrencyWriter!
+  @IBOutlet var wantCurrencyWriter: CurrencyWriter!
+  
+  func activityIndicator(show show: Bool) {
+    activityView.hidden = !show
+  }
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -36,11 +41,6 @@ class MainView: UIView {
     }
     
     return super.pointInside(point, withEvent: event)
-  }
-  
-  private func endActions() {
-    myCurrencyWriter.endActions()
-    wantCurrencyWriter.endActions()
   }
   
   private func localization() {

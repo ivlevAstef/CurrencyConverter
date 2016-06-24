@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SIALoggerSwift
 
 class ServerRequest {
   private static let URL = "http://api.fixer.io/"
@@ -17,11 +18,13 @@ class ServerRequest {
   }
   
   func GET(callback: (data: NSData?, error: String?) -> ()) {
+    SIALog.Info("GET \(requestURL) Request Started")
     let request = NSMutableURLRequest(URL: NSURL(string: requestURL)!)
     request.timeoutInterval = ServerRequest.Timeout
     
     let session = NSURLSession.sharedSession()
     let task = session.dataTaskWithRequest(request) {dataOpt, _, errorOpt in
+      SIALog.Info("GET \(self.requestURL) Request Ended With data \(dataOpt)")
       if let error = errorOpt {
         callback(data: nil, error: error.localizedDescription)
         return

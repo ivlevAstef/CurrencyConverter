@@ -50,6 +50,20 @@
                                     <constraint firstAttribute="height" constant="30" id="AfJ-r3-D21"/>
                                 </constraints>
                             </view>
+                            <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gxd-G3-lPd">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="tQL-A3-dPe">
+                                        <rect key="frame" x="142" y="265" width="37" height="37"/>
+                                        <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="tQL-A3-dPe" firstAttribute="centerY" secondItem="gxd-G3-lPd" secondAttribute="centerY" id="5hn-cX-GVg"/>
+                                    <constraint firstItem="tQL-A3-dPe" firstAttribute="centerX" secondItem="gxd-G3-lPd" secondAttribute="centerX" id="BqW-N6-ZQt"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -57,26 +71,39 @@
                             <constraint firstItem="pJT-Yd-AfL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="4uj-GC-diQ"/>
                             <constraint firstItem="72f-04-pOM" firstAttribute="top" secondItem="8Hp-qQ-r4l" secondAttribute="bottom" constant="48" id="52e-Dp-c48"/>
                             <constraint firstItem="72f-04-pOM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="6ww-3Q-uJy"/>
+                            <constraint firstItem="gxd-G3-lPd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="7NU-rR-dSD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gxd-G3-lPd" secondAttribute="trailing" id="7oS-KF-HnS"/>
+                            <constraint firstItem="gxd-G3-lPd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8cL-WF-Xzb"/>
                             <constraint firstItem="pJT-Yd-AfL" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="BbY-8B-nj4"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qBo-Kg-Iyd" secondAttribute="trailing" id="Ceo-QL-sbI"/>
                             <constraint firstItem="qBo-Kg-Iyd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="EcG-3N-nVM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pxo-Sl-rmm" secondAttribute="trailing" id="F6a-dr-Dw1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8Hp-qQ-r4l" secondAttribute="trailing" id="Ggm-dk-clx"/>
+                            <constraint firstAttribute="trailing" secondItem="gxd-G3-lPd" secondAttribute="trailing" id="Jm8-xP-AmO"/>
                             <constraint firstItem="pxo-Sl-rmm" firstAttribute="top" secondItem="pJT-Yd-AfL" secondAttribute="bottom" constant="8" id="OKE-zG-l6Y"/>
+                            <constraint firstItem="gxd-G3-lPd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="PTM-JM-etV"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gxd-G3-lPd" secondAttribute="bottom" id="Wu7-G0-aie"/>
                             <constraint firstItem="8Hp-qQ-r4l" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="hL2-2G-d1Q"/>
+                            <constraint firstItem="gxd-G3-lPd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ifL-M3-p8r"/>
                             <constraint firstItem="pJT-Yd-AfL" firstAttribute="top" secondItem="qBo-Kg-Iyd" secondAttribute="bottom" constant="32" id="jVO-wT-DDu"/>
                             <constraint firstItem="qBo-Kg-Iyd" firstAttribute="top" secondItem="72f-04-pOM" secondAttribute="bottom" constant="8" id="kYi-LK-SbV"/>
                             <constraint firstItem="72f-04-pOM" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="ruR-kC-alj"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gxd-G3-lPd" secondAttribute="bottom" id="te1-j3-4de"/>
                             <constraint firstItem="pxo-Sl-rmm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="uhI-Cj-1rj"/>
                             <constraint firstItem="8Hp-qQ-r4l" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="wiJ-qT-sTH"/>
                             <constraint firstItem="8Hp-qQ-r4l" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="wop-eO-R7K"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="7NU-rR-dSD"/>
+                                <exclude reference="7oS-KF-HnS"/>
+                                <exclude reference="PTM-JM-etV"/>
                                 <exclude reference="wiJ-qT-sTH"/>
+                                <exclude reference="te1-j3-4de"/>
                             </mask>
                         </variation>
                         <connections>
+                            <outlet property="activityView" destination="gxd-G3-lPd" id="cr3-UZ-vDn"/>
                             <outlet property="myCurrencyLbl" destination="72f-04-pOM" id="I5D-kR-KXB"/>
                             <outlet property="myCurrencyWriter" destination="qBo-Kg-Iyd" id="5Aw-oG-nbZ"/>
                             <outlet property="titleLbl" destination="8Hp-qQ-r4l" id="HUy-rw-fdX"/>

@@ -6,7 +6,9 @@
 //  Copyright © 2016 Alexander Ivlev. All rights reserved.
 //
 
-class Currency {
+import Foundation
+
+class Currency: NSObject {
   let name: String
   let value: Double
   
@@ -14,4 +16,13 @@ class Currency {
     self.name = name
     self.value = value
   }
+  
+  override var description : String {
+    return "{Currency Name:\(name) Value:\(value)}"
+  }
+  
+  override var debugDescription : String {
+    return "{Currency Name:\(name) Value:\(value)}"
+  }
+  
 }

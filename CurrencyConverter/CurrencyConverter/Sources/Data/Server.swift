@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SIALoggerSwift
 
 class Server: ServerProtocol {
   
@@ -29,6 +30,8 @@ class Server: ServerProtocol {
   }
   
   private func parse(data: NSData) -> [Currency]? {
+    SIALog.Info("Start parse")
+    
     do {
       let objects = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
       
@@ -43,9 +46,11 @@ class Server: ServerProtocol {
           result.append(Currency(name: name, value: value))
         }
       }
-      
+    
+      SIALog.Info("Parse success: \(result)")
       return result
     } catch {
+      SIALog.Error("Parse failed")
       return nil
     }
   }

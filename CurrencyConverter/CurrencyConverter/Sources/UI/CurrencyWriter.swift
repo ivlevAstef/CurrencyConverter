@@ -142,16 +142,6 @@ class CurrencyWriter: UIView,
     
     view.bounds.origin.y = picker.frame.origin.y
     view.bounds.size.height = picker.frame.size.height
-    
-    setCurrencies([Currency(name: "USB", value: 1.0),
-      Currency(name: "RUB", value: 1.0),
-      Currency(name: "AZB", value: 1.0),
-      Currency(name: "CCC", value: 1.0),
-      Currency(name: "FGF", value: 1.0),
-      Currency(name: "QWE", value: 1.0),
-      Currency(name: "RTY", value: 1.0),
-      Currency(name: "EUR", value: 1.0),
-      Currency(name: "TST", value: 1.0)])
   }
   
   override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
