@@ -1,0 +1,17 @@
+PODS:
+  - DITranquillity (0.0.2):
+    - DITranquillity/Core (= 0.0.2)
+  - DITranquillity/Core (0.0.2)
+  - SIALoggerSwift (1.1.3):
+    - SIALoggerSwift/Core (= 1.1.3)
+  - SIALoggerSwift/Core (1.1.3)
+
+DEPENDENCIES:
+  - DITranquillity
+  - SIALoggerSwift
+
+SPEC CHECKSUMS:
+  DITranquillity: feb55ad1c353cb45c1a3ef0674648079c719e90f
+  SIALoggerSwift: 920bd6130e64bffb38081f954ba805a7f5dd45cb
+
+COCOAPODS: 0.39.0
